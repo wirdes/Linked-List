@@ -1,7 +1,7 @@
-# Linked-List
+# Sample Linked list for C 
 
 
--- Sample Linked list for C --
+
 
 features of the Code
 Sequential addition function
