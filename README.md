@@ -3,7 +3,7 @@
 
 
 
-features of the Code
+features of the Code\n
 Sequential addition function
 Delete function
 Printing all data
