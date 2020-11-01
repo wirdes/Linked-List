@@ -1,33 +1,32 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <locale.h>
-
 struct student{
-	int  studentNotes;
-	int  studentNumber;
+	int index;
+	int studentNotes;
+	int studentNumber;
 	struct  student * next ;
 };
 
 typedef struct student Student;
 
+
 Student * delSt(struct student * r,int number){
 	Student *temp;
 	Student *iter = r;
-	if(r->studentNumber == number ){
+	if(r-> index == number ){
 		temp = r;
 		r = r->next;
 		free(temp);
 		return r;
-		
 	}
-	while(iter ->next !=NULL && iter -> next ->studentNumber !=number ){
+	while(iter ->next !=NULL && iter -> next ->index !=number ){
 		iter = iter ->next;
 	}
 	if(iter -> next == NULL){
-		printf("Öðrenci bulunamadý");
+		printf("Ã–ÄŸrenci bulunamadÄ±");
 		return r;
 	}
-	
 	temp = iter -> next;
 	iter -> next = iter -> next ->next;
 	free(temp);
@@ -36,30 +35,29 @@ Student * delSt(struct student * r,int number){
 }
 Student * addSt(struct student * r,int number,int note){
 	if(r == NULL){
-		//içerisi boþ oldugunda buraya girer
+		//iÃ§erisi boÅŸ oldugunda buraya girer
 		r = (Student * )malloc(sizeof(Student));
-			r-> studentNumber = number;
-			r-> studentNotes  = note;
-			r-> next  = NULL;
-			return r;	
+		r-> index=0;
+		r-> studentNumber = number;
+		r-> studentNotes  = note;
+		r-> next  = NULL;
+		return r;	
 	} 
 	if(r->studentNotes < note ){ 
-	// gelen elemanýn ilk elemandan büyük olma durumu
+	// gelen elemanÄ±n ilk elemandan bÃ¼yÃ¼k olma durumu
 				Student * temp = (Student *)malloc(sizeof(Student));
 				temp -> next = NULL;
 				temp -> studentNotes = note;
 				temp -> studentNumber = number;
 				temp -> next = r;
 				return  temp;
-		} 
-			
-					
+		} 			
 	Student * iter = r;
 	while(iter->next != NULL && iter -> next ->studentNotes >= note ){
 		if(iter -> next ->studentNotes == note){
 			//esit olma durumunda buraya girer
 			if (iter -> next ->studentNumber > number){
-				//gelen verirnin oncekinden kücük olma duumunda buraya girer
+				//gelen verirnin oncekinden kÃ¼cÃ¼k olma duumunda buraya girer
 					Student * temp = (Student *)malloc(sizeof(Student));
 					temp ->next = iter ->next;
 					temp -> studentNotes = note;
@@ -73,9 +71,8 @@ Student * addSt(struct student * r,int number,int note){
 		} else {
 			iter = iter->next;
 		}
-		
 	}
-	//kalan tüm durumlarda buraya girer
+	//kalan tÃ¼m durumlarda buraya girer
 			Student * temp = (Student *)malloc(sizeof(Student));
 			temp ->next = iter ->next;
 			iter->next = temp;
@@ -83,10 +80,24 @@ Student * addSt(struct student * r,int number,int note){
 			temp -> studentNumber = number;
 			return r;			
 }
+int getIn(struct student * iter,int number){
+	while(iter != NULL){
+		if (iter->studentNumber == number){	
+		return iter->index;
+		}
+		iter = iter -> next;
+	}
+	
+}
 
-void printSt (struct student * iter){
-	while(iter != NULL){	
-		printf( "Num:%-5d  Notes:%d\n", iter->studentNumber, iter->studentNotes);
+void printSt (struct student * iter,int note){
+	int index = 0;
+	while(iter != NULL){
+		if (iter->studentNotes > note){	
+		iter -> index = index;
+		printf( "Index:%-2d Num:%-5d  Notes:%d\n",iter -> index, iter->studentNumber, iter->studentNotes);
+		index++;
+		}
 		iter = iter -> next;
 	}
 }
@@ -110,57 +121,58 @@ int main(void){
 	root = addSt(root,20060141,60);
 	root = addSt(root,20060011,50);
 	root = addSt(root,20060012,60);
-	
-	printf("--------------------------\n|Eklemek için:1          |\n|Silmek için:2           |\n|Deðiþtirmek için:3      |\n|Yazdýrmak için:4        |\n|Çýkmak için:5           |\n--------------------------\n|Lütfen bir iþlem seçiniz|\n--------------------------");
+	printf("--------------------------\n|Eklemek iÃ§in:1          |\n|Silmek iÃ§in:2           |\n|DeÄŸiÅŸtirmek iÃ§in:3      |\n|YazdÄ±rmak iÃ§in:4        |\n|Ã‡Ä±kmak iÃ§in:5           |\n--------------------------\n|LÃ¼tfen bir iÅŸlem seÃ§iniz|");
+  
 	int no,number;
 	int ch;
 	 while(secim!=5)
     {
-    	printf("\nSecim:");
+    	
+  	printf("\n--------------------------\nSecim:");
 		scanf("%d",&secim);
 		switch (secim){
     	case 1:
     		
-    		printf("Öðrenci numarasýný  giriniz:");
+    		printf("Ã–ÄŸrenci numarasÄ±nÄ±  giriniz:");
     		scanf("%d",&no);
-    		printf("Öðrenci notunu giriniz:");
+    		printf("Ã–ÄŸrenci notunu giriniz:");
     		scanf("%d",&number);
     		root = addSt(root,no,number);
       	break;
 
     	case 2:
-    		printf("Silmek istediðinizöðrenci numarasýný  giriniz:");
-    		scanf("%d",&no);;
+    		printf("Silmek istediÄŸiniz Ã¶ÄŸrenci indexini  giriniz:");
+    		scanf("%d",&no);
     		root = delSt(root,no);
-    	  
       	break;
       	
       	case 3:
-    	 	printf("Notunu deðiþtirmek istediðiniz öðrenci numarasýný  giriniz:");
-    		scanf("%d",&no);
-    		printf("Öðrencinin yeni notunu giriniz:");
+    	 	printf("Notunu deÄŸiÅŸtirmek istediÄŸiniz Ã¶ÄŸrenci numarasÄ±nÄ±  giriniz:");
     		scanf("%d",&number);
-    		root = delSt(root,no);
-    		root = addSt(root,no,number);
+    		printf("Ã–ÄŸrencinin yeni notunu giriniz:");
+    		scanf("%d",&no);
+    		root = delSt(root,getIn(root,number));
+    		root = addSt(root,number,no);
       	break;
       	
       	case 4:
+      		printf("LÃ¼tfen note giriniz:");
+    		scanf("%d",&no);;
       		
-    	 	printSt(root);
+    	 	printSt(root,no);
     	 	
       	break;
       	
       	case 5:
     	 
-      	break;
+      	break;  
   
    	    default:
    	    	
-      		printf("Lütfen geçerli bir iþlem seçiniz");
+      		printf("LÃ¼tfen geÃ§erli bir iÅŸlem seÃ§iniz");
       		
-			}
-		
+			}	
     }
-    printf("Programdan çýkýlýyor\n");
+    printf("Programdan Ã§Ä±kÄ±lÄ±yor\n");
 	
 }
