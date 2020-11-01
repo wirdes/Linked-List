@@ -24,7 +24,7 @@ Student * delSt(struct student * r,int number){
 		iter = iter ->next;
 	}
 	if(iter -> next == NULL){
-		printf("Öğrenci bulunamadı");
+		printf("Student not found");
 		return r;
 	}
 	temp = iter -> next;
@@ -35,7 +35,7 @@ Student * delSt(struct student * r,int number){
 }
 Student * addSt(struct student * r,int number,int note){
 	if(r == NULL){
-		//içerisi boş oldugunda buraya girer
+		
 		r = (Student * )malloc(sizeof(Student));
 		r-> index=0;
 		r-> studentNumber = number;
@@ -44,7 +44,7 @@ Student * addSt(struct student * r,int number,int note){
 		return r;	
 	} 
 	if(r->studentNotes < note ){ 
-	// gelen elemanın ilk elemandan büyük olma durumu
+	
 				Student * temp = (Student *)malloc(sizeof(Student));
 				temp -> next = NULL;
 				temp -> studentNotes = note;
@@ -72,7 +72,7 @@ Student * addSt(struct student * r,int number,int note){
 			iter = iter->next;
 		}
 	}
-	//kalan tüm durumlarda buraya girer
+	
 			Student * temp = (Student *)malloc(sizeof(Student));
 			temp ->next = iter ->next;
 			iter->next = temp;
@@ -169,10 +169,10 @@ int main(void){
   
    	    default:
    	    	
-      		printf("Lütfen geçerli bir işlem seçiniz");
+      		printf("Please select a valid transaction");
       		
 			}	
     }
-    printf("Programdan çıkılıyor\n");
+    printf("Exited program\n");
 	
 }
