@@ -121,42 +121,42 @@ int main(void){
 	root = addSt(root,20060141,60);
 	root = addSt(root,20060011,50);
 	root = addSt(root,20060012,60);
-	printf("--------------------------\n|Eklemek için:1          |\n|Silmek için:2           |\n|Değiştirmek için:3      |\n|Yazdırmak için:4        |\n|Çıkmak için:5           |\n--------------------------\n|Lütfen bir işlem seçiniz|");
+	printf("--------------------------\n|To add:1                |\n|To delete:2             |\n|To change:3             |\n|To print:4              |\n|To exit:5               |\n--------------------------\n|Please select an action |");
   
 	int no,number;
 	int ch;
 	 while(secim!=5)
     {
     	
-  	printf("\n--------------------------\nSecim:");
+  	printf("\n--------------------------\nAction:");
 		scanf("%d",&secim);
 		switch (secim){
     	case 1:
     		
-    		printf("Öğrenci numarasını  giriniz:");
+    		printf("Enter student number:");
     		scanf("%d",&no);
-    		printf("Öğrenci notunu giriniz:");
+    		printf("Enter student grade:");
     		scanf("%d",&number);
     		root = addSt(root,no,number);
       	break;
 
     	case 2:
-    		printf("Silmek istediğiniz öğrenci indexini  giriniz:");
+    		printf("Enter the student index you want to delete:");
     		scanf("%d",&no);
     		root = delSt(root,no);
       	break;
       	
       	case 3:
-    	 	printf("Notunu değiştirmek istediğiniz öğrenci numarasını  giriniz:");
+    	 	printf("Enter the number of the student whose grade you want to change:");
     		scanf("%d",&number);
-    		printf("Öğrencinin yeni notunu giriniz:");
+    		printf("Enter the student's new grade:");
     		scanf("%d",&no);
     		root = delSt(root,getIn(root,number));
     		root = addSt(root,number,no);
       	break;
       	
       	case 4:
-      		printf("Lütfen note giriniz:");
+      		printf("Enter the smallest note you want to see :");
     		scanf("%d",&no);;
       		
     	 	printSt(root,no);
